@@ -16,3 +16,4 @@ pandas
 xlrd
 unstructured[all-docs]
 cryptography
+httpx
