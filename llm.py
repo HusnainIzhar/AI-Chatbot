@@ -14,8 +14,14 @@ from langchain_community.document_loaders import (
     UnstructuredPowerPointLoader,
 )
 from langchain_core.prompts.prompt import PromptTemplate
-from langchain.memory import ConversationBufferWindowMemory
+from langchain.memory import ConversationBufferWindowMemory, ConversationBufferMemory
 from prompts import document_template, template
+
+
+PROMPT = PromptTemplate(input_variables=["history", "input"], template=template)
+llm = ChatOllama(model="llama3")
+memory = ConversationBufferMemory()
+conversation = ConversationChain(llm=llm, memory=memory, verbose=True, prompt=PROMPT)
 
 
 # PDF RAG
@@ -42,7 +48,6 @@ def chunks_embeddings(data):
 def ollama_llm(chunks):
     try:
         template = "Context: {context}\nQuestion: {question}\nAnswer:"
-        llm = ChatOllama(model="llama3")
         parser = StrOutputParser()
         chain = llm | parser
         PROMPT = PromptTemplate(
@@ -69,20 +74,14 @@ def pdf_chat(is_file, question):
     file = pdf_loader(is_file)
     chunks = chunks_embeddings(file)
     qa = ollama_llm(chunks=chunks)
-    print(qa({'query':question})['result'])
+    query = qa({"query": question})["result"]
+    return query
 
-    return None
 
+def handle_chat(file, question):
+    if file:
 
-# Normal Chat
-def normal_chat(question):
-    llm = ChatOllama(model="llama3")
-    PROMPT = PromptTemplate(input_variables=["history", "input"], template=template)
-    conversation = ConversationChain(
-        prompt=PROMPT,
-        llm=llm,
-        verbose=True,
-        memory=ConversationBufferWindowMemory(ai_prefix="AI Assistant", k=3),
-    )
-    chat = conversation.predict(input=question)
-    return chat
+        return pdf_chat(file, question)
+    else:
+
+        return conversation.predict(input=question)
