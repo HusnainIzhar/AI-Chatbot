@@ -1,25 +1,24 @@
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import OllamaEmbeddings
-from langchain_community.vectorstores import Chroma
-from langchain_community.chat_models import ChatOllama
-import ollama
+from langchain_chroma import Chroma
 import logging
 from langchain.chains import ConversationChain, RetrievalQA
 from langchain_core.output_parsers import StrOutputParser
 from langchain_community.document_loaders import (
     PyPDFLoader,
-    WebBaseLoader,
-    UnstructuredExcelLoader,
-    UnstructuredImageLoader,
-    UnstructuredPowerPointLoader,
 )
 from langchain_core.prompts.prompt import PromptTemplate
-from langchain.memory import ConversationBufferWindowMemory, ConversationBufferMemory
-from prompts import document_template, template
+from langchain.memory import ConversationBufferMemory
+from prompts import  template
+from langchain_groq import ChatGroq
+from langchain_huggingface import HuggingFaceEmbeddings
 
-
+#llm init
 PROMPT = PromptTemplate(input_variables=["history", "input"], template=template)
-llm = ChatOllama(model="llama3")
+llm = ChatGroq(
+    temperature=0,
+    groq_api_key="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",
+    model_name="llama3-groq-8b-8192-tool-use-preview"
+)
 memory = ConversationBufferMemory()
 conversation = ConversationChain(llm=llm, memory=memory, verbose=True, prompt=PROMPT)
 
@@ -34,18 +33,23 @@ def pdf_loader(file):
 
 def chunks_embeddings(data):
     try:
-        print(data)
         chunks = RecursiveCharacterTextSplitter(
             chunk_size=1000, chunk_overlap=200
         ).split_documents(data)
-        embeddings = OllamaEmbeddings(model="nomic-embed-text")
+        
+        if not chunks:
+            logging.error("No chunks created from the data.")
+            return None
+        
+        embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+        
         vector_store = Chroma.from_documents(documents=chunks, embedding=embeddings)
         return vector_store
     except Exception as e:
-        logging.error("An error occured in chunk_embedding fn: %s", e, exc_info=True)
+        logging.error("An error occurred in chunk_embedding function: %s", e, exc_info=True)
+        return None
 
-
-def ollama_llm(chunks):
+def llm_init(chunks):
     try:
         template = "Context: {context}\nQuestion: {question}\nAnswer:"
         parser = StrOutputParser()
@@ -62,7 +66,7 @@ def ollama_llm(chunks):
             return_source_documents=True,
             chain_type_kwargs=chain_type_kwargs,
         )
-
+        print('qa is ',qa)
         return qa
 
     except Exception as e:
@@ -73,15 +77,13 @@ def ollama_llm(chunks):
 def pdf_chat(is_file, question):
     file = pdf_loader(is_file)
     chunks = chunks_embeddings(file)
-    qa = ollama_llm(chunks=chunks)
+    qa = llm_init(chunks=chunks)
     query = qa({"query": question})["result"]
     return query
 
 
 def handle_chat(file, question):
     if file:
-
         return pdf_chat(file, question)
     else:
-
         return conversation.predict(input=question)
