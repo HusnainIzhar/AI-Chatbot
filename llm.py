@@ -11,12 +11,16 @@ from langchain.memory import ConversationBufferMemory
 from prompts import  template
 from langchain_groq import ChatGroq
 from langchain_huggingface import HuggingFaceEmbeddings
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 #llm init
 PROMPT = PromptTemplate(input_variables=["history", "input"], template=template)
 llm = ChatGroq(
     temperature=0,
-    groq_api_key="",
+    groq_api_key=os.getenv('API'),
     model_name="llama3-groq-8b-8192-tool-use-preview"
 )
 memory = ConversationBufferMemory()

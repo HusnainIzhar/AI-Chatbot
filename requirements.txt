@@ -7,3 +7,4 @@ gradio
 langchain_huggingface
 langchain-chroma
 langchain_groq
+python-dotenv
