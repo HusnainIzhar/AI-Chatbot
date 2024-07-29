@@ -16,7 +16,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 PROMPT = PromptTemplate(input_variables=["history", "input"], template=template)
 llm = ChatGroq(
     temperature=0,
-    groq_api_key="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",
+    groq_api_key="",
     model_name="llama3-groq-8b-8192-tool-use-preview"
 )
 memory = ConversationBufferMemory()
