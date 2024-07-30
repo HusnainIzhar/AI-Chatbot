@@ -1,7 +1,6 @@
 langchain-core
 langchain-community
 langchain
-chromadb
 pypdf
 gradio
 langchain_huggingface
