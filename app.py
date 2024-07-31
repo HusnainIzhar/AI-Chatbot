@@ -14,4 +14,5 @@ ui = gr.Interface(
     secondary_hue="violet",)
 )
 
-ui.launch()
+ui.launch(server_name="0.0.0.0", server_port=3000)
+
