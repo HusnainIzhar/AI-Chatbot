@@ -1,5 +1,5 @@
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import Chroma
 import logging
 from langchain.chains import ConversationChain, RetrievalQA
 from langchain_core.output_parsers import StrOutputParser
@@ -70,7 +70,6 @@ def llm_init(chunks):
             return_source_documents=True,
             chain_type_kwargs=chain_type_kwargs,
         )
-        print('qa is ',qa)
         return qa
 
     except Exception as e:
