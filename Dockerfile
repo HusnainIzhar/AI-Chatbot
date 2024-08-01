@@ -19,7 +19,7 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 # Add application code
 COPY . .
 
-EXPOSE 3000
+EXPOSE $PORT
 
 # Command to run the application
-CMD ["python", "app.py"]
+CMD ["python", "app.py"]--bind 0.0.0.0:$PORT

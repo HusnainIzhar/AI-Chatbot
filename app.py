@@ -12,4 +12,5 @@ ui = gr.Interface(
 )
 
 print("its working", flush=True)
-ui.launch(server_name="0.0.0.0", server_port=3000)
+port = int(os.environ.get("PORT", 3000))
+ui.launch(server_name="0.0.0.0", server_port=port)
