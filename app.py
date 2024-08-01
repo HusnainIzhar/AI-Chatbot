@@ -1,5 +1,6 @@
 from llm import handle_chat
 import gradio as gr
+import os
 
 # Gradio interface
 ui = gr.Interface(
