@@ -57,6 +57,6 @@ Check out the live demo of the chatbot [here](https://chat-bot-rag-4f5db36516b4.
 
 ## Contact
 
-For any questions or inquiries, please contact Hassan at [Husnainizhar@outlook.com](mailto:husnainizhar@outlook.com).
+For any questions or inquiries, please contact me at [Husnainizhar@outlook.com](mailto:husnainizhar@outlook.com).
 
 
