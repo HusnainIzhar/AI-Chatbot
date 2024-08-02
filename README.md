@@ -24,12 +24,24 @@ This repository contains an AI chatbot application that utilizes Retrieval-Augme
 - Docker (optional, for containerization)
 - [Groq](https://www.groq.com/) setup for model serving
 - [Gradio](https://gradio.app/) for the frontend interface
-- langchain
+- Langchain
 
 ### Installation
 
 1. Clone the repository:
 
-   ```bash
+   ```
    git clone https://github.com/HusnainIzhar/AI-Chatbot-RAG.git
    cd AI-Chatbot-RAG
+2. Install the required Python packages:
+
+    ```
+    pip install -r requirements.txt
+
+3.Run the application:
+
+   ```
+   python app.py
+
+### Docker Pull
+   
