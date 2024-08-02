@@ -48,7 +48,15 @@ This repository contains an AI chatbot application that utilizes Retrieval-Augme
 You can also pull the Docker image directly from Docker Hub:
 
  ```
-    docker pull husnainizhar/bot:latest
+ docker pull husnainizhar/bot:latest
+
+ ```
+ ## Live Demo
+
+Check out the live demo of the chatbot [here](https://chat-bot-rag-4f5db36516b4.herokuapp.com/?__theme=dark).
+
+## Contact
+
+For any questions or inquiries, please contact Hassan at [Husnainizhar@outlook.com](mailto:husnainizhar@outlook.com).
 
 
-   
