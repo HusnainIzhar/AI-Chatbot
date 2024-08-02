@@ -38,10 +38,17 @@ This repository contains an AI chatbot application that utilizes Retrieval-Augme
     ```
     pip install -r requirements.txt
 
-3.Run the application:
+3. Run the application:
 
-   ```
+    ```
    python app.py
+    
+## Docker Pull
 
-### Docker Pull
+You can also pull the Docker image directly from Docker Hub:
+
+ ```
+    docker pull husnainizhar/bot:latest
+
+
    
