@@ -12,6 +12,5 @@ ui = gr.Interface(
     theme=gr.themes.Default(primary_hue="violet", secondary_hue="violet")
 )
 
-print("its working", flush=True)
 port = int(os.environ.get("PORT", 3000))
-ui.launch(server_name="0.0.0.0", server_port=port)
+ui.launch(server_name="0.0.0.0", server_port=port,share=True)

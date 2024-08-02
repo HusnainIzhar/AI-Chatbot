@@ -4,5 +4,6 @@ gradio
 langchain_huggingface
 langchain_groq
 python-dotenv
-chromadb
+faiss-cpu 
 langchain_community
+tiktoken
